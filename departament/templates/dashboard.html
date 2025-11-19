@@ -1,0 +1,84 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block title %}Dashboard - Miami Metro{% endblock %} 
+
+{% block content %}
+
+    <h1 class="mb-4">Visão Geral do Sistema 🚇</h1>
+
+    <div class="row">
+        <!-- Card de Usuários Ativos -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow border-left-primary h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col me-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Usuários Ativos
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">1.250</div>
+                        </div>
+                        <div class="col-auto">
+                            <span style="font-size: 24px; color: #4e73df;">👥</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card de Chamados Abertos -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow border-left-success h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col me-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Chamados Abertos
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">42</div>
+                        </div>
+                        <div class="col-auto">
+                            <span style="font-size: 24px; color: #1cc88a;">🚨</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card de Última Atualização -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow border-left-info h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col me-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Última Atualização
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">18/11/2025</div>
+                        </div>
+                        <div class="col-auto">
+                            <span style="font-size: 24px; color: #36b9cc;">🕒</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card para o Relatório de Atividade Diária -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Relatório de Atividade Diária</h6>
+                </div>
+                <div class="card-body" style="min-height: 300px;">
+                    <p class="text-muted">Espaço reservado para um gráfico ou tabela de dados.</p>
+                    <!-- Aqui você pode adicionar gráficos ou tabelas dinâmicas -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

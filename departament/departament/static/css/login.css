@@ -1,0 +1,145 @@
+body { 
+  background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  font-family: "Roboto", Arial, sans-serif;
+  color: #e0e0e0;
+}
+
+.login-container {
+  width: 100%;
+  padding: 20px;
+}
+
+.login-card {
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  background: #2b2b2b;
+}
+
+.card-header {
+  background: linear-gradient(135deg, #6b6b6b 0%, #4a4a4a 100%);
+  border: none;
+  padding: 30px 25px;
+  text-align: center;
+}
+
+.login-logo {
+  display: block;
+  margin: 0 auto 20px; /* Aumentei o espaçamento abaixo */
+  width: 100px; /* Aumentei o tamanho da logo */
+  height: 100px; /* Aumentei a altura para manter a proporção */
+  background: #222222;
+  border-radius: 50%;
+  padding: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.card-header h4 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 1px;
+}
+
+.card-body {
+  padding: 30px 25px;
+}
+
+.form-label {
+  font-weight: 500;
+  color: #bbb;
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+
+.form-control {
+  border-radius: 6px;
+  border: 1px solid #555;
+  padding: 12px 16px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background-color: #333;
+  color: #ffffff; /* Altere a cor do texto para branco */
+}
+
+.form-control::placeholder {
+  color: #ffffff; /* Altere a cor do texto do placeholder para branco */
+}
+
+.form-control:focus {
+  border-color: #764ba2;
+  box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.3);
+  background-color: #444;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #1f3a68 0%, #2d4d6c 100%);
+  border: none;
+  border-radius: 6px;
+  padding: 13px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(118, 75, 162, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.alert {
+  border-radius: 6px;
+  border: none;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.alert-danger {
+  background-color: #3c1d1d;
+  color: #ff6666;
+  border-left: 4px solid #e74c3c;
+}
+
+.input-group-icon {
+  position: relative;
+}
+
+.input-group-icon i {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6b7280;
+}
+
+.input-group-icon .form-control {
+  padding-left: 45px;
+}
+
+@media (max-width: 576px) {
+  .card-body {
+    padding: 25px 20px;
+  }
+
+  .card-header {
+    padding: 25px 20px;
+  }
+
+  .login-logo {
+    width: 60px;  /* Ajusta o tamanho da logo para telas pequenas */
+    height: 60px;
+  }
+}

@@ -1,0 +1,165 @@
+/* Reset e estilos globais */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  font-family: "Roboto", Arial, sans-serif;
+  color: #333; /* Cor de texto padrão */
+}
+
+body {
+  background-color: #f4f6f9; /* Cor de fundo claro padrão para todas as páginas */
+  padding-top: 80px; /* Ajuste para dar espaço para o navbar fixo */
+}
+
+/* Contêiner principal */
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Navbar específico para o Dashboard */
+.navbar {
+  background-color: #222;
+  color: #fff;
+}
+
+.navbar a {
+  color: #fff;
+  font-weight: bold;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}
+
+/* Cards do Dashboard */
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.card-body {
+  padding: 15px;
+  font-size: 14px;
+}
+
+/* Estilo específico para os cards de estatísticas no dashboard */
+.card .card-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card .card-body .text-xs {
+  font-size: 12px;
+  color: #777;
+}
+
+.card .card-body .h5 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.card .card-body .icon {
+  font-size: 30px;
+}
+
+.card .card-header {
+  background-color: #f8f9fa;
+  padding: 10px;
+  font-size: 16px;
+}
+
+/* Estilos para as cores de cada tipo de card */
+.card-primary {
+  border-left: 5px solid #007bff;
+}
+
+.card-success {
+  border-left: 5px solid #28a745;
+}
+
+.card-danger {
+  border-left: 5px solid #dc3545;
+}
+
+.card-info {
+  border-left: 5px solid #17a2b8;
+}
+
+/* Estilos para os gráficos ou dados dinâmicos */
+.chart-container {
+  height: 300px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+/* Tabelas */
+table {
+  width: 100%;
+  margin-bottom: 20px;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f8f9fa;
+}
+
+/* Estilo para os botões no dashboard */
+.btn-dashboard {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-dashboard:hover {
+  opacity: 0.8;
+}
+
+/* Responsividade para o Dashboard */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  .navbar {
+    padding: 10px;
+  }
+
+  .card-body {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .card-body .icon {
+    margin-top: 10px;
+  }
+}
