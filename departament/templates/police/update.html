@@ -1,90 +1,135 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Edit Officer - Miami Metro{% endblock %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% endblock %}
+
 {% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="fw-bold text-dark mb-1">Edit Officer</h2>
+                <p class="text-muted mb-0">Update personnel information.</p>
+            </div>
+            <a href="{% url 'police-list' %}" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-arrow-left me-1"></i> Back to List
+            </a>
+        </div>
 
-<div class="card shadow">
-    <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
-        <h4 class="mb-0">Edit Officer</h4>
-        <a href="{% url 'police-list' %}" class="btn btn-light btn-sm">Back to List</a>
-    </div>
+        <div class="card card-custom mb-5">
+            <div class="card-body p-4">
+                
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
 
-    <div class="card-body">
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-
-            <div class="row g-3">
-                <!-- NAME -->
-                <div class="col-md-6">
-                    <label class="form-label">{{ form.name.label }}</label>
-                    {{ form.name }}
-                    {% if form.name.errors %}
-                    <div class="text-danger small">{{ form.name.errors }}</div>
-                    {% endif %}
-                </div>
-
-                <!-- BADGE NUMBER -->
-                <div class="col-md-6">
-                    <label class="form-label">{{ form.badge_number.label }}</label>
-                    {{ form.badge_number }}
-                    {% if form.badge_number.errors %}
-                    <div class="text-danger small">{{ form.badge_number.errors }}</div>
-                    {% endif %}
-                </div>
-
-                <!-- RANK -->
-                <div class="col-md-4">
-                    <label class="form-label">{{ form.rank.label }}</label>
-                    {{ form.rank }}
-                    {% if form.rank.errors %}
-                    <div class="text-danger small">{{ form.rank.errors }}</div>
-                    {% endif %}
-                </div>
-
-                <!-- DEPARTMENT -->
-                <div class="col-md-4">
-                    <label class="form-label">{{ form.department.label }}</label>
-                    {{ form.department }}
-                    {% if form.department.errors %}
-                    <div class="text-danger small">{{ form.department.errors }}</div>
-                    {% endif %}
-                </div>
-
-                <!-- STATUS -->
-                <div class="col-md-4">
-                    <label class="form-label">{{ form.status.label }}</label>
-                    {{ form.status }}
-                    {% if form.status.errors %}
-                    <div class="text-danger small">{{ form.status.errors }}</div>
-                    {% endif %}
-                </div>
-
-                <!-- PHOTO -->
-                <div class="col-md-6">
-                    <label class="form-label">{{ form.photo.label }}</label>
-                    {{ form.photo }}
-
-                    {% if officer.photo %}
-                    <div class="mt-2">
-                        <p class="small text-muted mb-1">Current Photo:</p>
-                        <img src="{{ officer.photo.url }}" alt="Officer Photo" width="100" class="rounded shadow-sm">
+                    <div class="text-center mb-5">
+                        <div class="image-upload-container">
+                            
+                            {% if form.instance.photo %}
+                                <img src="{{ form.instance.photo.url }}" id="previewImage" class="image-preview">
+                            {% else %}
+                                <img src="{% static 'img/default-user.png' %}" id="previewImage" class="image-preview">
+                            {% endif %}
+                            
+                            <div class="upload-icon-overlay" id="uploadBtn" title="Change Photo">
+                                <i class="bi bi-camera-fill"></i>
+                            </div>
+                        </div>
+                        <div class="mt-2 text-muted small">Click to update photo (JPG, PNG)</div>
+                        
+                        {{ form.photo }}
+                        {% if form.photo.errors %}
+                            <div class="text-danger small mt-1">{{ form.photo.errors }}</div>
+                        {% endif %}
                     </div>
-                    {% endif %}
 
-                    {% if form.photo.errors %}
-                    <div class="text-danger small">{{ form.photo.errors }}</div>
-                    {% endif %}
-                </div>
+                    <div class="row g-4">
+                        <div class="col-12">
+                            <div class="form-section-title">
+                                <i class="bi bi-person-vcard me-2"></i>Personal Details
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+                            <label class="form-label">Full Name</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-person"></i></span>
+                                {{ form.name }} 
+                            </div>
+                            {% if form.name.errors %}
+                                <div class="text-danger small mt-1">{{ form.name.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                         <div class="col-md-4">
+                            <label class="form-label">Status</label>
+                            {{ form.status }}
+                            {% if form.status.errors %}
+                                <div class="text-danger small mt-1">{{ form.status.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-12 mt-4">
+                            <div class="form-section-title">
+                                <i class="bi bi-building-lock me-2"></i>Department Info
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Badge Number</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0">#</span>
+                                {{ form.badge_number }}
+                            </div>
+                            {% if form.badge_number.errors %}
+                                <div class="text-danger small mt-1">{{ form.badge_number.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Department</label>
+                            {{ form.department }}
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Rank</label>
+                            {{ form.rank }}
+                        </div>
+
+                    </div> <hr class="my-5 border-secondary-subtle">
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <a href="{% url 'police-list' %}" class="btn btn-light px-4">Cancel</a>
+                        <button type="submit" class="btn btn-primary px-5 fw-bold">
+                            <i class="bi bi-save me-2"></i>Save Changes
+                        </button>
+                    </div>
+
+                </form>
             </div>
-
-            <hr class="my-4">
-
-            <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-warning px-4">Update Officer</button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
+{% endblock %}
 
+{% block extra_js %}
+    <script src="{% static 'js/forms.js' %}"></script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var inputs = document.querySelectorAll('input[type="text"], input[type="number"], select');
+            inputs.forEach(function(input) {
+                input.classList.add('form-control');
+                if(input.tagName === 'SELECT') {
+                    input.classList.add('form-select');
+                    input.classList.remove('form-control');
+                }
+            });
+        });
+    </script>
 {% endblock %}

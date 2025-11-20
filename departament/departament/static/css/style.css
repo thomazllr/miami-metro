@@ -1,141 +1,105 @@
-/* Geral - Reset e normalização */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* =========================================
+   Variáveis e Reset
+   ========================================= */
+:root {
+  --primary-bg: #f4f6f9;
+  --navbar-bg: #0f172a;
+  --text-main: #334155;
+  --text-muted: #64748b;
+  --accent-color: #3b82f6;
+  --white: #ffffff;
 }
 
-html, body {
+html {
   height: 100%;
-  font-family: "Roboto", Arial, sans-serif;
-  color: #333; /* Cor de texto padrão */
 }
 
 body {
-  background-color: #f4f6f9; /* Cor de fundo padrão */
-  color: #333; /* Cor de texto padrão */
+  background-color: var(--primary-bg);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text-main);
+  
+  /* --- CORREÇÃO DO FOOTER AQUI --- */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Garante que o corpo ocupe 100% da tela visível */
+  margin: 0;
 }
 
-/* Configuração de container para centralizar conteúdo */
-.container {
-  max-width: 1140px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-/* Tipografia */
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
-}
-
-p {
-  font-size: 16px;
-  line-height: 1.5;
-}
-
-a {
-  color: #0066cc;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-/* Estilos Globais para Botões */
-.btn {
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: 600;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.btn:hover {
-  opacity: 0.8;
-}
-
-/* Estilo para o Navbar */
-.navbar {
-  background-color: #222;
-  color: #fff;
-}
-
-.navbar a {
-  color: #fff;
-  font-weight: bold;
-}
-
-.navbar a:hover {
-  text-decoration: underline;
-}
-
-/* Cards gerais */
-.card {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin-bottom: 20px;
-}
-
-.card-header {
-  background-color: #f8f9fa;
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.card-body {
-  padding: 15px;
-  font-size: 14px;
-}
-
-/* Tabelas */
-table {
+/* =========================================
+   Conteúdo Principal
+   ========================================= */
+.main-content {
+  /* --- O SEGREDO --- */
+  flex: 1; /* Isso faz o conteúdo crescer e empurrar o footer lá para baixo */
+  
   width: 100%;
-  margin-bottom: 20px;
-  border-collapse: collapse;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  
+  /* Centraliza o conteúdo horizontalmente se desejar */
+  display: flex;
+  flex-direction: column; 
+  /* Se quiser alinhar o card no centro verticalmente também, descomente abaixo: */
+  /* justify-content: center; */ 
 }
 
-th, td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
+/* =========================================
+   Navbar
+   ========================================= */
+.navbar {
+  background-color: var(--navbar-bg) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  padding: 0.75rem 0;
 }
 
-th {
-  background-color: #f8f9fa;
+.navbar-brand {
+  font-weight: 700;
+  color: var(--white) !important;
 }
 
-/* Formulários */
-.form-label {
+.nav-link {
+  color: rgba(255, 255, 255, 0.65) !important;
   font-weight: 500;
-  margin-bottom: 8px;
+  padding: 0.5rem 1rem !important;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
 }
 
-.form-control {
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  padding: 12px;
-  font-size: 16px;
+.nav-link:hover {
+  color: var(--white) !important;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
-.form-control:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+.nav-link.active {
+  color: var(--accent-color) !important;
+  background-color: rgba(59, 130, 246, 0.1);
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-  .container {
-    padding: 10px;
-  }
+.btn-logout {
+  border: 1px solid rgba(255,255,255, 0.2);
+  margin-left: 10px;
+}
 
-  .navbar {
-    padding: 10px;
-  }
+.btn-logout:hover {
+  background-color: #ef4444 !important;
+  border-color: #ef4444 !important;
+  color: white !important;
+}
+
+/* =========================================
+   Footer
+   ========================================= */
+.footer {
+  /* Garante que o footer fique fixo apenas se faltar conteúdo */
+  background-color: transparent; /* Na sua foto parece transparente, mudei aqui */
+  padding: 2rem 0;
+  margin-top: auto; /* Segurança extra para empurrar para baixo */
+  text-align: center;
+  width: 100%;
+}
+
+.footer span {
+  color: var(--text-muted);
+  font-size: 0.9rem;
 }

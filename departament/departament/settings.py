@@ -34,8 +34,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "killer",
-    "police",
-    "cases"
+    "cases",
+    "police.apps.PoliceConfig",
 ]
 
 MIDDLEWARE = [
@@ -117,8 +117,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'departament/'
-STATIC_ROOT = BASE_DIR / 'departament'
+STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'static'
 STATICFILES_DIRS = [BASE_DIR / 'departament/static']
 
 # Default primary key field type
@@ -129,3 +129,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CSRF_TRUSTED_ORIGINS = [
     "https://localhost:8000",
 ]
+
+LOGIN_URL = '/'

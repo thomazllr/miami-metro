@@ -1,0 +1,82 @@
+/* static/css/forms.css */
+
+/* Área do Formulário */
+.form-section-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 0.5rem;
+}
+
+/* Inputs e Selects customizados */
+/* Nota: Isso estiliza os campos gerados automaticamente pelo Django */
+.form-control, .form-select {
+    border: 1px solid #e2e8f0;
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #334155;
+    transition: all 0.2s;
+    background-color: #fff;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.form-label {
+    font-weight: 500;
+    color: #475569;
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+}
+
+/* Custom Image Upload Box */
+.image-upload-container {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto; /* Centraliza */
+}
+
+.image-preview {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%; /* Círculo */
+    object-fit: cover;
+    border: 4px solid #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    background-color: #f1f5f9;
+}
+
+.upload-icon-overlay {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: #3b82f6;
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 2px solid white;
+    transition: transform 0.2s;
+}
+
+.upload-icon-overlay:hover {
+    transform: scale(1.1);
+    background-color: #2563eb;
+}
+
+/* Esconde o input file padrão feio */
+#id_photo { 
+    display: none; 
+}

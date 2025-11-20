@@ -29,9 +29,9 @@ body {
 
 .login-logo {
   display: block;
-  margin: 0 auto 20px; /* Aumentei o espaçamento abaixo */
-  width: 100px; /* Aumentei o tamanho da logo */
-  height: 100px; /* Aumentei a altura para manter a proporção */
+  margin: 0 auto 20px; 
+  width: 100px;
+  height: 100px;
   background: #222222;
   border-radius: 50%;
   padding: 15px;
@@ -64,11 +64,11 @@ body {
   font-size: 16px;
   transition: all 0.3s ease;
   background-color: #333;
-  color: #ffffff; /* Altere a cor do texto para branco */
+  color: #ffffff; 
 }
 
 .form-control::placeholder {
-  color: #ffffff; /* Altere a cor do texto do placeholder para branco */
+  color: #ffffff; 
 }
 
 .form-control:focus {
@@ -92,11 +92,6 @@ body {
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(118, 75, 162, 0.4);
-}
-
-.btn-primary:active {
-  transform: translateY(0);
 }
 
 .alert {
@@ -129,17 +124,3 @@ body {
   padding-left: 45px;
 }
 
-@media (max-width: 576px) {
-  .card-body {
-    padding: 25px 20px;
-  }
-
-  .card-header {
-    padding: 25px 20px;
-  }
-
-  .login-logo {
-    width: 60px;  /* Ajusta o tamanho da logo para telas pequenas */
-    height: 60px;
-  }
-}
