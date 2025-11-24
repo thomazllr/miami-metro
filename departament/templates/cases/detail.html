@@ -1,0 +1,245 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Case #{{ case.case_number }} | Miami Metro{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/cases.css' %}">
+<style>
+    /* Existing CSI styles (kept for structure) */
+    .confidential-stamp {
+        border: 3px solid #dc3545;
+        color: #dc3545;
+        padding: 0.5rem 1rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        transform: rotate(-5deg);
+        display: inline-block;
+        opacity: 0.8;
+    }
+    .tech-border {
+        border: 1px solid #0dcaf0;
+        box-shadow: 0 0 10px rgba(13, 202, 240, 0.2);
+    }
+    .officer-badge-img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border: 2px solid #495057;
+    }
+    .suspect-mugshot {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        filter: grayscale(20%) contrast(120%);
+    }
+    .data-label {
+        color: #6c757d;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .data-value {
+        color: #e9ecef;
+        font-family: 'Courier New', monospace;
+        font-size: 1.1rem;
+    }
+
+    /* Override to use white background inside detail pages (matches system) */
+    .file-container {
+        background-color: #ffffff;
+        color: #212529;
+        min-height: 100vh;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+    .file-container .card.bg-dark {
+        background-color: #ffffff !important;
+        color: #212529 !important;
+    }
+    .file-container .text-white { color: #212529 !important; }
+    .file-container .text-light { color: #495057 !important; }
+    .file-container .bg-black.bg-opacity-25 { background-color: #f8f9fa !important; }
+    .file-container .border-secondary { border-color: #dee2e6 !important; }
+    .file-container .confidential-stamp { opacity: 0.95; }
+    
+    /* Fix badge text color */
+    .file-container .badge { color: #fff !important; }
+    .file-container .badge.bg-warning { color: #212529 !important; }
+    
+    /* Fix timeline text */
+    .file-container .timeline .text-white { color: #212529 !important; }
+    .file-container .timeline { border-left-color: #dee2e6 !important; }
+    .file-container .timeline-marker { border-color: #fff !important; box-shadow: 0 0 0 2px #dee2e6; }
+    
+    /* Fix mugshot overlay */
+    .file-container .position-absolute.bg-dark { background-color: rgba(255,255,255,0.9) !important; border-top: 1px solid #dee2e6; }
+    .file-container .position-absolute.bg-dark .text-white { color: #212529 !important; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid file-container py-4">
+    <!-- Top Navigation & Actions -->
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <a href="{% url 'case-list' %}" class="btn btn-outline-secondary btn-sm text-uppercase">
+            <i class="bi bi-chevron-left me-1"></i> Archives
+        </a>
+        <div class="d-flex align-items-center gap-3">
+            {% if case.status == 1 %}
+                <div class="confidential-stamp fs-6">Open Investigation</div>
+            {% elif case.status == 2 %}
+                <div class="confidential-stamp fs-6" style="border-color: #198754; color: #198754;">Case Closed</div>
+            {% else %}
+                <div class="confidential-stamp fs-6" style="border-color: #ffc107; color: #ffc107;">Cold Case</div>
+            {% endif %}
+            
+            <a href="{% url 'case-update' case.pk %}" class="btn btn-info btn-sm text-dark fw-bold">
+                <i class="bi bi-pencil-square me-1"></i> UPDATE FILE
+            </a>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Main Case File -->
+        <div class="col-lg-8">
+            <div class="card bg-dark border-secondary shadow-lg h-100">
+                <div class="card-header bg-transparent border-secondary d-flex justify-content-between align-items-center py-3">
+                    <div>
+                        <h6 class="text-info mb-0 text-uppercase small fw-bold">Miami Metro Police Dept.</h6>
+                        <h2 class="mb-0 fw-bold text-white">CASE #{{ case.case_number }}</h2>
+                    </div>
+                    <div class="text-end">
+                        <div class="data-label">Date Opened</div>
+                        <div class="data-value">{{ case.date_opened|date:"d M Y" }}</div>
+                    </div>
+                </div>
+                
+                <div class="card-body p-4">
+                    <div class="mb-5">
+                        <h4 class="text-uppercase text-secondary border-bottom border-secondary pb-2 mb-3">
+                            <i class="bi bi-card-heading me-2"></i>Incident Report
+                        </h4>
+                        <h3 class="text-white mb-3">{{ case.title }}</h3>
+                        <div class="p-3 bg-black bg-opacity-25 border border-secondary rounded">
+                            <p class="mb-0 text-light" style="white-space: pre-line; font-family: 'Courier New', monospace;">{{ case.description }}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="text-uppercase text-secondary border-bottom border-secondary pb-2 mb-3">
+                                <i class="bi bi-clock-history me-2"></i>Timeline
+                            </h5>
+                            <div class="timeline ms-2">
+                                <div class="timeline-item">
+                                    <div class="timeline-marker bg-info"></div>
+                                    <div class="timeline-content">
+                                        <div class="data-label">Case Opened</div>
+                                        <div class="text-white">{{ case.date_opened|date:"F j, Y" }}</div>
+                                    </div>
+                                </div>
+                                {% if case.date_closed %}
+                                <div class="timeline-item">
+                                    <div class="timeline-marker bg-success"></div>
+                                    <div class="timeline-content">
+                                        <div class="data-label">Case Closed</div>
+                                        <div class="text-white">{{ case.date_closed|date:"F j, Y" }}</div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <div class="timeline-item">
+                                    <div class="timeline-marker bg-secondary"></div>
+                                    <div class="timeline-content">
+                                        <div class="data-label">Last Updated</div>
+                                        <div class="text-white">{{ case.updated_at|timesince }} ago</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar: Suspects & Officers -->
+        <div class="col-lg-4">
+            <!-- Primary Suspect -->
+            <div class="card bg-dark border-secondary shadow mb-4">
+                <div class="card-header bg-transparent border-secondary">
+                    <h5 class="mb-0 text-danger text-uppercase fw-bold">
+                        <i class="bi bi-person-bounding-box me-2"></i>Primary Suspect
+                    </h5>
+                </div>
+                <div class="card-body text-center p-0">
+                    {% if case.killer %}
+                        <div class="position-relative">
+                            {% if case.killer.photos.first %}
+                                <img src="{{ case.killer.photos.first.image.url }}" class="suspect-mugshot" alt="Suspect">
+                            {% else %}
+                                <div class="suspect-mugshot d-flex align-items-center justify-content-center bg-secondary text-dark">
+                                    <i class="bi bi-person-fill fs-1"></i>
+                                </div>
+                            {% endif %}
+                            <div class="position-absolute bottom-0 start-0 w-100 bg-dark bg-opacity-75 py-2">
+                                <h4 class="mb-0 text-white fw-bold">{{ case.killer.alias|default:case.killer.name }}</h4>
+                            </div>
+                        </div>
+                        <div class="p-3 text-start">
+                            <div class="row g-2">
+                                <div class="col-12">
+                                    <div class="data-label">Status</div>
+                                    <div class="badge bg-danger">{{ case.killer.get_status_display }}</div>
+                                </div>
+                            </div>
+                            <div class="d-grid mt-3">
+                                <a href="{% url 'killer-detail' case.killer.pk %}" class="btn btn-outline-danger btn-sm">
+                                    VIEW CRIMINAL PROFILE
+                                </a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="p-5 text-muted">
+                            <i class="bi bi-question-circle fs-1 mb-2"></i>
+                            <p>No suspect identified.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Assigned Officers -->
+            <div class="card bg-dark border-secondary shadow">
+                <div class="card-header bg-transparent border-secondary">
+                    <h5 class="mb-0 text-info text-uppercase fw-bold">
+                        <i class="bi bi-shield-shaded me-2"></i>Assigned Officers
+                    </h5>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        {% for officer in case.officers.all %}
+                        <li class="list-group-item bg-transparent border-secondary d-flex align-items-center p-3">
+                            {% if officer.photo %}
+                                <img src="{{ officer.photo.url }}" class="rounded-circle officer-badge-img me-3" alt="{{ officer.name }}">
+                            {% else %}
+                                <div class="rounded-circle officer-badge-img me-3 bg-secondary d-flex align-items-center justify-content-center">
+                                    <i class="bi bi-person-badge text-dark"></i>
+                                </div>
+                            {% endif %}
+                            <div>
+                                <div class="fw-bold text-white">{{ officer.get_rank_display }} {{ officer.name }}</div>
+                                <div class="small text-muted">Badge #{{ officer.badge_number }}</div>
+                            </div>
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item bg-transparent border-secondary p-4 text-center text-muted">
+                            No officers assigned.
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

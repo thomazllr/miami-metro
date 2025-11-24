@@ -1,0 +1,83 @@
+/* Case List Styles */
+.case-folder {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.case-folder:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    border-color: #adb5bd;
+}
+
+.folder-tab {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #e9ecef;
+    padding: 4px 12px;
+    border-bottom-right-radius: 8px;
+    border-right: 1px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+    z-index: 1;
+}
+
+.avatar-group {
+    display: flex;
+    align-items: center;
+}
+
+.avatar-group img, .avatar-group .rounded-circle {
+    margin-left: -10px;
+    transition: transform 0.2s;
+}
+
+.avatar-group img:first-child, .avatar-group .rounded-circle:first-child {
+    margin-left: 0;
+}
+
+.avatar-group img:hover, .avatar-group .rounded-circle:hover {
+    transform: translateY(-3px);
+    z-index: 2;
+}
+
+/* CSI Detail Styles */
+.csi-file-container {
+    background-color: #1a1d20; /* Dark background for CSI feel */
+    min-height: 100vh;
+    padding: 2rem;
+    color: #e0e0e0;
+}
+
+.csi-card {
+    background: linear-gradient(145deg, #212529, #1a1d20);
+    border: 1px solid #343a40;
+}
+
+.timeline {
+    position: relative;
+    padding-left: 20px;
+    border-left: 2px solid #495057;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: -26px;
+    top: 5px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid #343a40;
+}
+
+.timeline-content {
+    padding-left: 10px;
+}

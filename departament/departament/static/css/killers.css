@@ -1,0 +1,143 @@
+/* static/css/killers.css */
+
+/* Layout de Grid para o Mural */
+.killers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Card do Suspeito */
+.killer-card {
+    background: #fff;
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+}
+
+.killer-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* Faixa de Status (Ativo/Preso) */
+.status-ribbon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    z-index: 2;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.status-active {
+    background-color: #ef4444; /* Vermelho */
+    color: white;
+}
+
+.status-inactive {
+    background-color: #10b981; /* Verde (Capturado/Inativo) */
+    color: white;
+}
+
+/* Área da Foto (Mugshot) */
+.killer-photo-container {
+    height: 250px;
+    width: 100%;
+    background-color: #e2e8f0;
+    position: relative;
+    overflow: hidden;
+}
+
+.killer-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Garante que a foto preencha sem distorcer */
+    transition: transform 0.5s;
+}
+
+.killer-card:hover .killer-img {
+    transform: scale(1.05);
+}
+
+/* Corpo do Card */
+.killer-info {
+    padding: 1.25rem;
+}
+
+.killer-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.2rem;
+}
+
+.killer-nickname {
+    font-size: 0.9rem;
+    color: #64748b;
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
+/* Nível de Perigo (Barra colorida) */
+.danger-meter {
+    height: 6px;
+    width: 100%;
+    background-color: #f1f5f9;
+    border-radius: 3px;
+    margin-top: 0.5rem;
+    overflow: hidden;
+}
+
+.danger-fill {
+    height: 100%;
+    border-radius: 3px;
+}
+
+/* Cores baseadas no nível (1 a 5) */
+.level-1 { width: 20%; background-color: #3b82f6; } /* Azul */
+.level-2 { width: 40%; background-color: #eab308; } /* Amarelo */
+.level-3 { width: 60%; background-color: #f97316; } /* Laranja */
+.level-4 { width: 80%; background-color: #ef4444; } /* Vermelho */
+.level-5 { width: 100%; background-color: #7f1d1d; } /* Vermelho Escuro */
+
+.crimes-preview {
+    font-size: 0.85rem;
+    color: #475569;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Limita a 3 linhas de texto */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    min-height: 3.6em;
+}
+
+/* Garante que a imagem cubra tudo sem esticar */
+.killer-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+}
+
+/* Sombra no texto das setinhas para ver melhor em fotos claras */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: drop-shadow(0px 0px 2px rgba(0,0,0,0.5));
+    background-size: 1.5rem; /* Deixa a seta um pouco menor e mais discreta */
+}
+
+/* Ajuste na altura do container */
+.killer-photo-container {
+    height: 280px; /* Aumentei um pouco para caber melhor fotos verticais */
+    width: 100%;
+    background-color: #e2e8f0;
+    position: relative;
+    overflow: hidden;
+}

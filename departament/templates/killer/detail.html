@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Profile: {{ killer.alias|default:killer.name }} | Miami Metro{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/cases.css' %}">
+<style>
+    .mugshot-large {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        border: 1px solid #495057;
+        filter: grayscale(20%) contrast(120%);
+    }
+    .fingerprint-bg {
+        background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PHBhdGggZD0iTTEwIDEwIEw5MCA5MCIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiLz48L3N2Zz4='); /* Placeholder for fingerprint pattern */
+        opacity: 0.1;
+    }
+    .stat-box {
+        background: rgba(0,0,0,0.3);
+        border: 1px solid #343a40;
+        padding: 1rem;
+        text-align: center;
+    }
+    .stat-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: #6c757d;
+        letter-spacing: 1px;
+    }
+    .stat-value {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #e9ecef;
+    }
+    .crime-list {
+        font-family: 'Courier New', monospace;
+    }
+    /* White theme overrides for profile detail */
+    .file-container {
+        background-color: #ffffff;
+        color: #212529;
+        min-height: 100vh;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+    .file-container .card.bg-dark { background-color: #ffffff !important; color: #212529 !important; }
+    .file-container .stat-box { background: #f8f9fa; border-color: #dee2e6; }
+    .file-container .stat-value { color: #212529; }
+    .file-container .text-white { color: #212529 !important; }
+    .file-container .text-light { color: #495057 !important; } /* Darker grey for better contrast */
+    .file-container .text-muted { color: #6c757d !important; }
+    .file-container .border-secondary { border-color: #dee2e6 !important; }
+    .file-container .bg-black.bg-opacity-25 { background-color: #f8f9fa !important; }
+    
+    /* Fix badge text color if it inherits text-white override */
+    .file-container .badge.text-white { color: #fff !important; }
+    .file-container .badge.bg-danger { color: #fff !important; }
+    .file-container .badge.bg-success { color: #fff !important; }
+    .file-container .badge.bg-secondary { color: #fff !important; }
+    
+    /* Fix list group items */
+    .file-container .list-group-item.bg-dark { background-color: #fff !important; color: #212529 !important; }
+    .file-container .list-group-item.bg-dark:hover { background-color: #f8f9fa !important; }
+    
+    /* Fix mugshot overlay text */
+    .file-container .position-absolute.bg-dark { background-color: rgba(255,255,255,0.9) !important; border-top: 1px solid #dee2e6 !important; }
+    .file-container .position-absolute.bg-dark .text-white { color: #212529 !important; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid file-container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <a href="{% url 'killer-list' %}" class="btn btn-outline-secondary btn-sm text-uppercase">
+            <i class="bi bi-chevron-left me-1"></i> Suspect Database
+        </a>
+        <div class="d-flex align-items-center gap-2">
+            <span class="badge {% if killer.status == 1 %}bg-danger{% elif killer.status == 2 %}bg-warning text-dark{% else %}bg-secondary{% endif %} fs-6">
+                {{ killer.get_status_display|upper }}
+            </span>
+            <a href="{% url 'killer-update' killer.pk %}" class="btn btn-outline-info btn-sm">
+                <i class="bi bi-pencil me-1"></i> Edit Profile
+            </a>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Left Column: Mugshot & Stats -->
+        <div class="col-lg-4">
+            <div class="card bg-dark border-secondary shadow-lg mb-4">
+                <div class="card-body p-0 position-relative">
+                    {% if killer.photos.first %}
+                        <img src="{{ killer.photos.first.image.url }}" class="mugshot-large" alt="{{ killer.name }}">
+                    {% else %}
+                        <div class="mugshot-large d-flex align-items-center justify-content-center bg-secondary text-dark">
+                            <i class="bi bi-person-fill display-1"></i>
+                        </div>
+                    {% endif %}
+                    <div class="position-absolute bottom-0 start-0 w-100 bg-dark bg-opacity-75 p-3 border-top border-secondary">
+                        <h3 class="text-white fw-bold mb-0 text-center text-uppercase">{{ killer.alias|default:killer.name }}</h3>
+                        {% if killer.alias %}
+                            <div class="text-center text-info small">AKA: {{ killer.name }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-2 mb-4">
+                <div class="col-12">
+                    <div class="stat-box">
+                        <div class="stat-label">Danger Level</div>
+                        <div class="stat-value text-danger">{{ killer.danger_level }}/5</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Photo Gallery -->
+            {% if killer.photos.count > 1 %}
+            <div class="card bg-dark border-secondary shadow-lg">
+                <div class="card-header bg-transparent border-secondary">
+                    <h6 class="mb-0 text-uppercase text-secondary fw-bold">Additional Photos</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row g-2">
+                        {% for photo in killer.photos.all|slice:"1:" %}
+                        <div class="col-4">
+                            <img src="{{ photo.image.url }}" class="img-fluid border border-secondary" style="height: 80px; object-fit: cover;">
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Right Column: Details -->
+        <div class="col-lg-8">
+            <div class="card bg-dark border-secondary shadow-lg h-100">
+                <div class="card-header bg-transparent border-secondary d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 text-uppercase text-info fw-bold">
+                        <i class="bi bi-file-person me-2"></i>Criminal Record
+                    </h5>
+                    <div class="text-muted small">ID: {{ killer.pk|stringformat:"06d" }}</div>
+                </div>
+                <div class="card-body p-4">
+                    <div class="mb-5">
+                        <h6 class="text-uppercase text-secondary fw-bold small mb-3">Known Crimes & Modus Operandi</h6>
+                        <div class="p-3 bg-black bg-opacity-25 border border-secondary rounded crime-list text-light">
+                            {{ killer.crimes|linebreaks }}
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <h6 class="text-uppercase text-secondary fw-bold small mb-3">Linked Cases</h6>
+                        <div class="list-group list-group-flush border border-secondary rounded">
+                            {% for case in killer.cases.all %}
+                            <a href="{% url 'case-detail' case.pk %}" class="list-group-item list-group-item-action bg-dark text-light border-secondary d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div class="fw-bold">Case #{{ case.case_number }}: {{ case.title }}</div>
+                                    <small class="text-muted">{{ case.date_opened|date:"Y-m-d" }}</small>
+                                </div>
+                                <span class="badge {% if case.status == 1 %}bg-danger{% elif case.status == 2 %}bg-success{% else %}bg-secondary{% endif %}">
+                                    {{ case.get_status_display }}
+                                </span>
+                            </a>
+                            {% empty %}
+                            <div class="list-group-item bg-dark text-muted border-secondary">
+                                No linked cases found in database.
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent border-secondary">
+                    <small class="text-muted">Record Created: {{ killer.created_at|date:"Y-m-d H:i" }}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

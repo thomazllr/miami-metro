@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {% if form.instance.pk %}Edit Case{% else %}New Case{% endif %} | Miami Metro
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="fw-bold text-dark mb-1">
+                    {% if form.instance.pk %}Edit Case File{% else %}Open New Case{% endif %}
+                </h2>
+                <p class="text-muted mb-0">
+                    {% if form.instance.pk %}Update investigation details.{% else %}Initiate a new criminal investigation.{% endif %}
+                </p>
+            </div>
+            <a href="{% url 'case-list' %}" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-arrow-left me-1"></i> Back to Archives
+            </a>
+        </div>
+
+        <div class="card card-custom mb-5 border-dark border-top border-3">
+            <div class="card-body p-4">
+                
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Case Number</label>
+                            {{ form.case_number }}
+                        </div>
+                        
+                        <div class="col-md-8">
+                            <label class="form-label fw-bold">Case Title</label>
+                            {{ form.title }}
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label fw-bold">Description</label>
+                            {{ form.description }}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Status</label>
+                            {{ form.status }}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Primary Suspect</label>
+                            {{ form.killer }}
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label fw-bold">Assigned Officers</label>
+                            <div class="border rounded p-3 bg-light" style="max-height: 200px; overflow-y: auto;">
+                                {{ form.officers }}
+                            </div>
+                            <small class="text-muted">Select all officers assigned to this case.</small>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Date Opened</label>
+                            {{ form.date_opened }}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Date Closed</label>
+                            {{ form.date_closed }}
+                        </div>
+                    </div>
+
+                    <hr class="my-5">
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <a href="{% url 'case-list' %}" class="btn btn-light px-4">Cancel</a>
+                        <button type="submit" class="btn btn-dark px-5 fw-bold">
+                            <i class="bi bi-save me-2"></i>
+                            {% if form.instance.pk %}Update File{% else %}Create File{% endif %}
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Simple script to add bootstrap classes to form fields
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll('input[type="text"], input[type="date"], textarea, select').forEach(input => {
+            input.classList.add('form-control');
+        });
+        // Fix for checkbox multiple select if needed, but default rendering might be list
+        // Adjusting checkbox list style
+        document.querySelectorAll('ul[id="id_officers"] li').forEach(li => {
+            li.style.listStyle = 'none';
+            li.classList.add('form-check');
+            const input = li.querySelector('input');
+            input.classList.add('form-check-input');
+            const label = li.querySelector('label');
+            label.classList.add('form-check-label');
+        });
+    });
+</script>
+{% endblock %}

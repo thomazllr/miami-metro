@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    {% if form.instance.pk %}Edit Suspect{% else %}New Suspect{% endif %} | Miami Metro
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+<link rel="stylesheet" href="{% static 'css/suspect_form.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="fw-bold text-dark mb-1">
+                    {% if form.instance.pk %}Edit Suspect{% else %}New Suspect{% endif %}
+                </h2>
+                <p class="text-muted mb-0">
+                    {% if form.instance.pk %}Update criminal profile details.{% else %}Create a new criminal entry.{% endif %}
+                </p>
+            </div>
+            <a href="{% url 'killer-list' %}" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-arrow-left me-1"></i> Back to Mural
+            </a>
+        </div>
+
+        <div class="card card-custom mb-5 border-danger border-top border-3">
+            <div class="card-body p-4">
+                
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="row g-3">
+                        <div class="col-md-7">
+                            <label class="form-label fw-bold">Full Name</label>
+                            {{ form.name }}
+                        </div>
+
+                        <div class="col-md-5">
+                            <label class="form-label fw-bold">Nickname (AKA)</label>
+                            {{ form.nickname }}
+                        </div>
+
+                        <div class="col-12 mt-4">
+                            <label class="form-label fw-bold d-flex justify-content-between">
+                                Danger Level <span class="badge bg-danger" id="dangerValue">Level {{ form.danger_level.value|default:"1" }}</span>
+                            </label>
+                            {{ form.danger_level }}
+                            <div class="d-flex justify-content-between small text-muted px-1">
+                                <span>Low Risk</span><span>Extreme</span>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mt-3">
+                            <label class="form-label fw-bold">Status</label>
+                            <div class="status-selector">
+                                {{ form.status }}
+                            </div>
+                        </div>
+
+                        <div class="col-12 mt-4">
+                            <label class="form-label fw-bold">Criminal Record</label>
+                            {{ form.crimes }}
+                        </div>
+
+
+                    </div>
+
+                    <hr class="my-5">
+
+                    <h5 class="fw-bold mb-3"><i class="bi bi-images me-2"></i>Evidence Photos</h5>
+                    
+                    {{ photos_formset.management_form }}
+
+                    <div class="row g-3">
+                        {% for photo_form in photos_formset %}
+                            
+                            {% for hidden in photo_form.hidden_fields %}
+                                {{ hidden }}
+                            {% endfor %}
+
+                            <div class="col-md-4 col-6 photo-item">
+                                {% if photo_form.instance.pk %}
+                                    <div class="photo-card shadow-sm position-relative">
+                                        <a href="{{ photo_form.instance.image.url }}" target="_blank">
+                                            <img src="{{ photo_form.instance.image.url }}" alt="Evidence" class="d-block w-100 rounded">
+                                        </a>
+                                        
+                                        <button type="button" class="btn-delete-photo position-absolute top-0 end-0 m-2 btn btn-danger btn-sm rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 32px; height: 32px; padding: 0;" title="Remove photo">
+                                            <i class="bi bi-x-lg" style="font-size: 1rem;"></i>
+                                        </button>
+
+                                        <div class="d-none">
+                                            {{ photo_form.DELETE }}
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div class="upload-box">
+                                        <i class="bi bi-cloud-upload fs-2 text-secondary mb-2"></i>
+                                        <small class="text-muted fw-bold">Upload Photo</small>
+                                        <small class="text-muted" style="font-size: 0.7rem">(Click here)</small>
+                                        {{ photo_form.image }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <hr class="my-5">
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <a href="{% url 'killer-list' %}" class="btn btn-light px-4">Cancel</a>
+                        <button type="submit" class="btn btn-danger px-5 fw-bold">
+                            <i class="bi bi-save me-2"></i>
+                            {% if form.instance.pk %}Update Record{% else %}Save Record{% endif %}
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1050">
+  <div id="deleteToast" class="toast align-items-center text-white bg-dark border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        <i class="bi bi-info-circle-fill me-2 text-danger"></i>
+        Photo removed. Save record to confirm deletion.
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal de Confirmação -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header bg-danger text-white border-0">
+                <h5 class="modal-title fw-bold">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    Confirmar Registro
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="mb-3">
+                    <h6 class="fw-bold text-dark mb-2">Suspeito:</h6>
+                    <p class="text-muted mb-0 fs-5" id="modalSuspectName">—</p>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <h6 class="fw-bold text-dark mb-2">Status:</h6>
+                        <span class="badge rounded-pill px-3 py-2" id="modalStatusBadge">—</span>
+                    </div>
+                    <div class="col-6">
+                        <h6 class="fw-bold text-dark mb-2">Nível de Perigo:</h6>
+                        <div class="d-flex align-items-center">
+                            <span class="fw-bold me-2" id="modalDangerLevel">—</span>
+                            <div class="progress flex-grow-1" style="height: 6px;">
+                                <div class="progress-bar bg-danger" id="modalDangerBar" role="progressbar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-3" id="photoInfo">
+                    <h6 class="fw-bold text-dark mb-2">
+                        <i class="bi bi-images text-primary me-1"></i>
+                        Evidências Fotográficas:
+                    </h6>
+                    <p class="text-muted mb-0" id="modalPhotoCount">—</p>
+                </div>
+
+                <div class="alert alert-warning border-0 d-none" id="noPhotoWarning">
+                    <i class="bi bi-exclamation-circle me-2"></i>
+                    <strong>Atenção:</strong> Nenhuma foto será anexada ao registro.
+                </div>
+            </div>
+            <div class="modal-footer border-0 bg-light">
+                <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle me-1"></i> Cancelar
+                </button>
+                <button type="button" class="btn btn-danger px-4 fw-bold" id="confirmSubmit">
+                    <i class="bi bi-check-circle me-1"></i> Confirmar Registro
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/suspect_form.js' %}"></script>
+{% endblock %}

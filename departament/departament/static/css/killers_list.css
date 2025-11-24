@@ -1,0 +1,159 @@
+/* Grid Layout */
+.killers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    padding-bottom: 2rem;
+}
+
+/* Card Styling */
+.killer-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+    border: 1px solid #e2e8f0;
+}
+
+.killer-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+/* Photo Container */
+.killer-photo-container {
+    height: 280px;
+    width: 100%;
+    background-color: #f1f5f9;
+    position: relative;
+    overflow: hidden;
+}
+
+.killer-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.killer-card:hover .killer-img {
+    transform: scale(1.05);
+}
+
+/* Carousel Controls */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: drop-shadow(0px 0px 2px rgba(0,0,0,0.8));
+    width: 2rem;
+    height: 2rem;
+    background-color: rgba(0,0,0,0.3);
+    border-radius: 50%;
+    background-size: 50%;
+}
+
+/* Gradient Overlay */
+.photo-overlay-gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+    pointer-events: none;
+}
+
+/* Status Badge */
+.status-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    z-index: 10;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    backdrop-filter: blur(4px);
+}
+
+.status-badge.missing {
+    background-color: rgba(239, 68, 68, 0.95);
+    color: white;
+    border: 2px solid #fff;
+}
+
+.status-badge.active {
+    background-color: rgba(220, 38, 38, 0.95);
+    color: white;
+    border: 2px solid #fff;
+}
+
+.status-badge.captured {
+    background-color: rgba(16, 185, 129, 0.95);
+    color: white;
+    border: 2px solid #fff;
+}
+
+.status-badge.dead {
+    background-color: rgba(107, 114, 128, 0.95);
+    color: white;
+    border: 2px solid #fff;
+}
+
+/* Card Content */
+.killer-info {
+    padding: 1.5rem;
+}
+
+.killer-name {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin-bottom: 0.25rem;
+    line-height: 1.2;
+}
+
+.killer-nickname {
+    font-size: 0.9rem;
+    color: #64748b;
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
+.crimes-preview {
+    font-size: 0.9rem;
+    color: #475569;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 4.5em; /* 3 lines approx */
+}
+
+/* Danger Meter */
+.danger-meter {
+    height: 8px;
+    background-color: #e2e8f0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 0.5rem;
+}
+
+.danger-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.danger-fill.level-1 { width: 20%; background-color: #94a3b8; }
+.danger-fill.level-2 { width: 40%; background-color: #22c55e; }
+.danger-fill.level-3 { width: 60%; background-color: #eab308; }
+.danger-fill.level-4 { width: 80%; background-color: #f97316; }
+.danger-fill.level-5 { width: 100%; background-color: #ef4444; }
+

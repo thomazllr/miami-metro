@@ -9,7 +9,9 @@ urlpatterns = [
     path("", Login.as_view(), name="login"),
     path("logout", Logout.as_view(), name="logout"),
     path("dashboard", DashboardView.as_view(), name="dashboard"),
-    path('police', include('police.urls'), name='police')
+    path('police', include('police.urls'), name='police'),
+    path("killer", include("killer.urls"), name='killer'),
+    path("cases/", include("cases.urls"), name='cases'),
 
 ]
 
