@@ -1,0 +1,113 @@
+.mugshot-large {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border: 1px solid #495057;
+    filter: grayscale(20%) contrast(120%);
+}
+
+.fingerprint-bg {
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PHBhdGggZD0iTTEwIDEwIEw5MCA5MCIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiLz48L3N2Zz4=');
+    opacity: 0.1;
+}
+
+.stat-box {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid #343a40;
+    padding: 1rem;
+    text-align: center;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #6c757d;
+    letter-spacing: 1px;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #e9ecef;
+}
+
+.crime-list {
+    font-family: 'Courier New', monospace;
+}
+
+/* White theme overrides for profile detail */
+.file-container {
+    background-color: #ffffff;
+    color: #212529;
+    min-height: 100vh;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.file-container .card.bg-dark {
+    background-color: #ffffff !important;
+    color: #212529 !important;
+}
+
+.file-container .stat-box {
+    background: #f8f9fa;
+    border-color: #dee2e6;
+}
+
+.file-container .stat-value {
+    color: #212529;
+}
+
+.file-container .text-white {
+    color: #212529 !important;
+}
+
+.file-container .text-light {
+    color: #495057 !important;
+}
+
+.file-container .text-muted {
+    color: #6c757d !important;
+}
+
+.file-container .border-secondary {
+    border-color: #dee2e6 !important;
+}
+
+.file-container .bg-black.bg-opacity-25 {
+    background-color: #f8f9fa !important;
+}
+
+.file-container .badge.text-white {
+    color: #fff !important;
+}
+
+.file-container .badge.bg-danger {
+    color: #fff !important;
+}
+
+.file-container .badge.bg-success {
+    color: #fff !important;
+}
+
+.file-container .badge.bg-secondary {
+    color: #fff !important;
+}
+
+.file-container .list-group-item.bg-dark {
+    background-color: #fff !important;
+    color: #212529 !important;
+}
+
+.file-container .list-group-item.bg-dark:hover {
+    background-color: #f8f9fa !important;
+}
+
+.file-container .position-absolute.bg-dark {
+    background-color: rgba(255,255,255,0.9) !important;
+    border-top: 1px solid #dee2e6 !important;
+}
+
+.file-container .position-absolute.bg-dark .text-white {
+    color: #212529 !important;
+}

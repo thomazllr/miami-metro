@@ -103,6 +103,11 @@
     border: 2px solid #fff;
 }
 
+/* Small Badge Text */
+.badge-small {
+    font-size: 0.7rem;
+}
+
 /* Card Content */
 .killer-info {
     padding: 1.5rem;

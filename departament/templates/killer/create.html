@@ -90,7 +90,7 @@
                                             <img src="{{ photo_form.instance.image.url }}" alt="Evidence" class="d-block w-100 rounded">
                                         </a>
                                         
-                                        <button type="button" class="btn-delete-photo position-absolute top-0 end-0 m-2 btn btn-danger btn-sm rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 32px; height: 32px; padding: 0;" title="Remove photo">
+                                        <button type="button" class="btn-delete-photo position-absolute top-0 end-0 m-2 btn btn-danger btn-sm rounded-circle d-flex align-items-center justify-content-center shadow-sm btn-delete-photo-custom" title="Remove photo">
                                             <i class="bi bi-x-lg" style="font-size: 1rem;"></i>
                                         </button>
 
@@ -102,7 +102,7 @@
                                     <div class="upload-box">
                                         <i class="bi bi-cloud-upload fs-2 text-secondary mb-2"></i>
                                         <small class="text-muted fw-bold">Upload Photo</small>
-                                        <small class="text-muted" style="font-size: 0.7rem">(Click here)</small>
+                                        <small class="text-muted text-small-hint">(Click here)</small>
                                         {{ photo_form.image }}
                                     </div>
                                 {% endif %}
@@ -126,7 +126,6 @@
     </div>
 </div>
 
-<!-- Toast Notification -->
 <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1050">
   <div id="deleteToast" class="toast align-items-center text-white bg-dark border-0" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="d-flex">
@@ -140,7 +139,6 @@
 </div>
 
 
-<!-- Modal de Confirmação -->
 <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg">
@@ -166,7 +164,7 @@
                         <h6 class="fw-bold text-dark mb-2">Nível de Perigo:</h6>
                         <div class="d-flex align-items-center">
                             <span class="fw-bold me-2" id="modalDangerLevel">—</span>
-                            <div class="progress flex-grow-1" style="height: 6px;">
+                            <div class="progress flex-grow-1 progress-bar-height">
                                 <div class="progress-bar bg-danger" id="modalDangerBar" role="progressbar" style="width: 0%"></div>
                             </div>
                         </div>

@@ -39,6 +39,12 @@ input[type=range]::-webkit-slider-thumb {
     transition: opacity 0.2s;
 }
 
+.btn-delete-photo-custom {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+}
+
 .photo-card:hover .btn-delete-photo {
     opacity: 1;
 }
@@ -195,4 +201,19 @@ input[type=range]::-webkit-slider-thumb {
     padding: 0.875rem 1rem;
     border-radius: 8px;
     font-size: 0.9rem;
+}
+
+/* Helper classes for inline style removal */
+.btn-delete-photo-custom {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+}
+
+.text-small-hint {
+    font-size: 0.7rem;
+}
+
+.progress-bar-height {
+    height: 6px;
 }

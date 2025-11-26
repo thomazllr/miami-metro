@@ -63,7 +63,6 @@
                 {{ killer.status_badge_text }}
             </div>
 
-            <!-- Carrossel -->
             <div class="killer-photo-container">
                 {% if killer.photos.all %}
                     <div id="carouselSuspect{{ killer.id }}" class="carousel slide h-100" data-bs-interval="false">
@@ -87,7 +86,7 @@
                         </button>
 
                         <div class="position-absolute bottom-0 end-0 p-2">
-                            <span class="badge bg-dark bg-opacity-75 rounded-pill" style="font-size: 0.7rem;">
+                            <span class="badge bg-dark bg-opacity-75 rounded-pill badge-small">
                                 <i class="bi bi-images me-1"></i> {{ killer.photos.count }}
                             </span>
                         </div>
@@ -137,8 +136,7 @@
     {% endfor %}
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true" data-delete-url-template="{% url 'killer-delete' 0 %}">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header border-0">
@@ -163,8 +161,5 @@
 {% endblock %}
 
 {% block extra_js %}
-<script>
-    const deleteUrlTemplate = "{% url 'killer-delete' 0 %}";
-</script>
 <script src="{% static 'js/killers_list.js' %}"></script>
 {% endblock %}

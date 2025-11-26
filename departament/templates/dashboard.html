@@ -1,64 +1,90 @@
 {% extends 'base.html' %} 
 {% load static %}
 
-{% block title %}Dashboard - Miami Metro{% endblock %} 
+{% block title %}Command Center | Miami Metro{% endblock %} 
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/dashboard_custom.css' %}">
+{% endblock %}
 
 {% block content %}
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-dark mb-1">Command Center</h2>
+            <p class="text-muted mb-0">Department Overview & Statistics</p>
+        </div>
+        <div class="text-end">
+            <span class="badge bg-light text-dark border px-3 py-2">
+                <i class="bi bi-calendar3 me-2"></i>{% now "F j, Y" %}
+            </span>
+        </div>
+    </div>
 
-    <h1 class="mb-4">Visão Geral do Sistema 🚇</h1>
-
-    <div class="row">
-        <!-- Card de Usuários Ativos -->
-        <div class="col-md-4 mb-4">
-            <div class="card shadow border-left-primary h-100 py-2">
+    <!-- Stats Cards -->
+    <div class="row g-4 mb-4">
+        <!-- Total Cases -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card dashboard-card shadow-sm h-100">
                 <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col me-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Usuários Ativos
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">1.250</div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted text-uppercase small fw-bold mb-1">Total Cases</h6>
+                            <h2 class="mb-0 fw-bold">{{ total_cases }}</h2>
                         </div>
-                        <div class="col-auto">
-                            <span style="font-size: 24px; color: #4e73df;">👥</span>
+                        <div class="card-icon-bg bg-light-primary">
+                            <i class="bi bi-folder2-open"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Card de Chamados Abertos -->
-        <div class="col-md-4 mb-4">
-            <div class="card shadow border-left-success h-100 py-2">
+        <!-- Solved Cases -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card dashboard-card shadow-sm h-100">
                 <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col me-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Chamados Abertos
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">42</div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted text-uppercase small fw-bold mb-1">Solved Cases</h6>
+                            <h2 class="mb-0 fw-bold text-success">{{ closed_cases }}</h2>
                         </div>
-                        <div class="col-auto">
-                            <span style="font-size: 24px; color: #1cc88a;">🚨</span>
+                        <div class="card-icon-bg bg-light-success">
+                            <i class="bi bi-check-circle"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Card de Última Atualização -->
-        <div class="col-md-4 mb-4">
-            <div class="card shadow border-left-info h-100 py-2">
+        <!-- Open Investigations -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card dashboard-card shadow-sm h-100">
                 <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col me-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                Última Atualização
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">18/11/2025</div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted text-uppercase small fw-bold mb-1">Active Investigations</h6>
+                            <h2 class="mb-0 fw-bold text-danger">{{ open_cases }}</h2>
                         </div>
-                        <div class="col-auto">
-                            <span style="font-size: 24px; color: #36b9cc;">🕒</span>
+                        <div class="card-icon-bg bg-light-danger">
+                            <i class="bi bi-exclamation-circle"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cold Cases -->
+        <div class="col-xl-3 col-md-6">
+            <div class="card dashboard-card shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted text-uppercase small fw-bold mb-1">Cold Cases</h6>
+                            <h2 class="mb-0 fw-bold text-warning">{{ cold_cases }}</h2>
+                        </div>
+                        <div class="card-icon-bg bg-light-warning">
+                            <i class="bi bi-snow2"></i>
                         </div>
                     </div>
                 </div>
@@ -66,19 +92,111 @@
         </div>
     </div>
 
-    <!-- Card para o Relatório de Atividade Diária -->
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Relatório de Atividade Diária</h6>
+    <div class="row g-4">
+        <!-- Chart Section -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm h-100 border-0">
+                <div class="card-header bg-white border-0 py-3">
+                    <h6 class="mb-0 fw-bold text-dark">Case Status Distribution</h6>
                 </div>
-                <div class="card-body" style="min-height: 300px;">
-                    <p class="text-muted">Espaço reservado para um gráfico ou tabela de dados.</p>
-                    <!-- Aqui você pode adicionar gráficos ou tabelas dinâmicas -->
+                <div class="card-body">
+                    <div class="chart-container d-flex justify-content-center align-items-center">
+                        <canvas id="caseStatusChart" 
+                                data-open="{{ open_cases }}" 
+                                data-closed="{{ closed_cases }}" 
+                                data-cold="{{ cold_cases }}"></canvas>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <div class="d-flex justify-content-center gap-3 small">
+                            <span class="text-muted"><i class="bi bi-circle-fill text-danger me-1"></i>Open</span>
+                            <span class="text-muted"><i class="bi bi-circle-fill text-success me-1"></i>Closed</span>
+                            <span class="text-muted"><i class="bi bi-circle-fill text-warning me-1"></i>Cold</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Cases Table -->
+        <div class="col-lg-8">
+            <div class="card shadow-sm h-100 border-0">
+                <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0 fw-bold text-dark">Recent Cases</h6>
+                    <a href="{% url 'case-list' %}" class="btn btn-sm btn-light text-primary fw-bold">View All</a>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th class="ps-4 text-uppercase text-muted small fw-bold border-0">Case #</th>
+                                    <th class="text-uppercase text-muted small fw-bold border-0">Title</th>
+                                    <th class="text-uppercase text-muted small fw-bold border-0">Status</th>
+                                    <th class="text-uppercase text-muted small fw-bold border-0">Assigned Officers</th>
+                                    <th class="text-uppercase text-muted small fw-bold border-0">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for case in latest_cases %}
+                                <tr>
+                                    <td class="ps-4 fw-bold text-dark">
+                                        <a href="{% url 'case-detail' case.pk %}" class="text-decoration-none text-dark">
+                                            {{ case.case_number }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <div class="fw-bold">{{ case.title }}</div>
+                                        {% if case.killer %}
+                                            <small class="text-muted">Suspect: {{ case.killer.name }}</small>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if case.status == 1 %}
+                                            <span class="badge bg-danger bg-opacity-10 text-danger">Open</span>
+                                        {% elif case.status == 2 %}
+                                            <span class="badge bg-success bg-opacity-10 text-success">Closed</span>
+                                        {% else %}
+                                            <span class="badge bg-warning bg-opacity-10 text-warning">Cold Case</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div class="officer-avatar-group">
+                                            {% for officer in case.officers.all|slice:":3" %}
+                                                {% if officer.photo %}
+                                                    <img src="{{ officer.photo.url }}" class="rounded-circle officer-avatar-sm" title="{{ officer.name }}">
+                                                {% else %}
+                                                    <div class="rounded-circle officer-avatar-sm bg-secondary d-flex align-items-center justify-content-center text-white small" title="{{ officer.name }}">
+                                                        {{ officer.name|first }}
+                                                    </div>
+                                                {% endif %}
+                                            {% empty %}
+                                                <span class="text-muted small">Unassigned</span>
+                                            {% endfor %}
+                                            {% if case.officers.count > 3 %}
+                                                <div class="rounded-circle officer-avatar-sm bg-light d-flex align-items-center justify-content-center text-muted small border">
+                                                    +{{ case.officers.count|add:"-3" }}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                    <td class="text-muted small">{{ case.date_opened|date:"M d, Y" }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="5" class="text-center py-4 text-muted">No recent cases found.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+{% endblock %}
 
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'js/dashboard.js' %}"></script>
 {% endblock %}
