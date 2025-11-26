@@ -1,0 +1,7 @@
+{
+  "name": "/workspaces/miami-metro/departament-mobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

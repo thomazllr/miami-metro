@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Dashboard</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="dashboard-grid">
+    <ion-card routerLink="/police-list" button>
+      <ion-card-header>
+        <ion-card-title>Officers</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-icon name="shield-outline" size="large"></ion-icon>
+        <p>Manage Police Force</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card routerLink="/killer-list" button color="danger">
+      <ion-card-header>
+        <ion-card-title>Suspects</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-icon name="skull-outline" size="large"></ion-icon>
+        <p>View Most Wanted</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card routerLink="/case-list" button color="warning">
+      <ion-card-header>
+        <ion-card-title>Cases</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-icon name="folder-open-outline" size="large"></ion-icon>
+        <p>Investigation Files</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

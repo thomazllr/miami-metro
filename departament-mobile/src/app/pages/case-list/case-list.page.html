@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar color="warning">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Cases</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let case of cases">
+      <ion-icon name="folder-outline" slot="start"></ion-icon>
+      <ion-label>
+        <h2>#{{ case.case_number }} - {{ case.title }}</h2>
+        <p>Opened: {{ case.date_opened }}</p>
+        <p *ngIf="case.killer">Suspect: {{ case.killer.name }}</p>
+      </ion-label>
+      <ion-badge slot="end" [color]="case.status === 1 ? 'danger' : (case.status === 2 ? 'success' : 'medium')">
+        {{ case.status_display }}
+      </ion-badge>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Officers</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let officer of officers">
+      <ion-avatar slot="start">
+        <img [src]="officer.photo || 'assets/img/default-avatar.png'" />
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ officer.rank_display }} {{ officer.name }}</h2>
+        <p>Badge: {{ officer.badge_number }}</p>
+        <p>{{ officer.department_display }}</p>
+      </ion-label>
+      <ion-badge slot="end" [color]="officer.status === 1 ? 'success' : 'medium'">
+        {{ officer.status_display }}
+      </ion-badge>
+    </ion-item>
+  </ion-list>
+</ion-content>
