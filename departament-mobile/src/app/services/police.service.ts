@@ -12,8 +12,12 @@ export class PoliceService {
 
   constructor(private http: HttpClient) { }
 
-  getOfficers(): Observable<PoliceOfficer[]> {
-    return this.http.get<PoliceOfficer[]>(this.apiUrl);
+  getOfficers(search?: string): Observable<PoliceOfficer[]> {
+    let params = {};
+    if (search) {
+      params = { search };
+    }
+    return this.http.get<PoliceOfficer[]>(this.apiUrl, { params });
   }
 
   getOfficer(id: number): Observable<PoliceOfficer> {

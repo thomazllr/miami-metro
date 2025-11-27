@@ -9,7 +9,7 @@
 
 {% block content %}
 <div class="container-fluid py-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
         <div>
             <h2 class="fw-bold text-dark mb-1">Command Center</h2>
             <p class="text-muted mb-0">Department Overview & Statistics</p>
@@ -94,7 +94,7 @@
 
     <div class="row g-4">
         <!-- Chart Section -->
-        <div class="col-lg-4">
+        <div class="col-12 col-xxl-4">
             <div class="card shadow-sm h-100 border-0">
                 <div class="card-header bg-white border-0 py-3">
                     <h6 class="mb-0 fw-bold text-dark">Case Status Distribution</h6>
@@ -118,7 +118,7 @@
         </div>
 
         <!-- Recent Cases Table -->
-        <div class="col-lg-8">
+        <div class="col-12 col-xxl-8">
             <div class="card shadow-sm h-100 border-0">
                 <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
                     <h6 class="mb-0 fw-bold text-dark">Recent Cases</h6>
@@ -145,7 +145,11 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <div class="fw-bold">{{ case.title }}</div>
+                                        <div class="fw-bold">
+                                            <a href="{% url 'case-detail' case.pk %}" class="text-decoration-none text-dark">
+                                                {{ case.title }}
+                                            </a>
+                                        </div>
                                         {% if case.killer %}
                                             <small class="text-muted">Suspect: {{ case.killer.name }}</small>
                                         {% endif %}

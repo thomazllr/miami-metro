@@ -10,6 +10,7 @@ import { LoginResponse } from '../models/auth.model';
 export class AuthService {
   private apiUrl = `${environment.apiUrl}/login/`;
   private tokenKey = 'auth_token';
+  private userKey = 'auth_user';
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
 
   constructor(private http: HttpClient) { }
@@ -18,6 +19,7 @@ export class AuthService {
     return this.http.post<LoginResponse>(this.apiUrl, credentials).pipe(
       tap(response => {
         this.setToken(response.token);
+        this.setUsername(response.user);
         this.isAuthenticatedSubject.next(true);
       })
     );
@@ -25,6 +27,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem(this.userKey);
     this.isAuthenticatedSubject.next(false);
     // Optionally call API logout endpoint
   }
@@ -33,8 +36,16 @@ export class AuthService {
     return localStorage.getItem(this.tokenKey);
   }
 
+  getUsername(): string | null {
+    return localStorage.getItem(this.userKey);
+  }
+
   private setToken(token: string): void {
     localStorage.setItem(this.tokenKey, token);
+  }
+
+  private setUsername(username: string): void {
+    localStorage.setItem(this.userKey, username);
   }
 
   private hasToken(): boolean {

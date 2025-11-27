@@ -12,8 +12,12 @@ export class CaseService {
 
   constructor(private http: HttpClient) { }
 
-  getCases(): Observable<Case[]> {
-    return this.http.get<Case[]>(this.apiUrl);
+  getCases(search?: string): Observable<Case[]> {
+    let params = {};
+    if (search) {
+      params = { search };
+    }
+    return this.http.get<Case[]>(this.apiUrl, { params });
   }
 
   getCase(id: number): Observable<Case> {

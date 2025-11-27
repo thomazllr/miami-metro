@@ -120,10 +120,39 @@
             <td class="font-monospace text-muted">#{{ officer.badge_number }}</td>
 
             <td class="text-end pe-4">
-                <a href="#" class="btn-icon" data-bs-toggle="tooltip" title="View Details">
+                <a href="#" class="btn-icon" data-bs-toggle="tooltip" title="View Details"
+                   onclick="showDetail(this, event)"
+                   data-name="{{ officer.name }}"
+                   data-rank="{{ officer.get_rank_display }}"
+                   data-department="{{ officer.get_department_display }}"
+                   data-status="{{ officer.get_status_display }}"
+                   data-badge="{{ officer.badge_number }}"
+                   data-photo="{% if officer.photo %}{{ officer.photo.url }}{% else %}{% static 'img/default-user.png' %}{% endif %}"
+                   data-cases-id="cases-{{ officer.id }}">
                     <i class="bi bi-eye"></i>
                 </a>
                 
+                <!-- Hidden Cases Data -->
+                <div id="cases-{{ officer.id }}" class="d-none">
+                    {% if officer.cases.all %}
+                        <ul class="list-group list-group-flush">
+                        {% for case in officer.cases.all %}
+                            <li class="list-group-item px-0 border-0">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="text-start">
+                                        <h6 class="mb-0 small fw-bold"><a href="{% url 'case-detail' case.id %}" class="text-decoration-none text-dark">{{ case.title }}</a></h6>
+                                        <small class="text-muted" style="font-size: 0.75em;">#{{ case.case_number }}</small>
+                                    </div>
+                                    <span class="badge bg-light text-dark border">{{ case.get_status_display }}</span>
+                                </div>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="text-muted small mb-0 text-center">No cases assigned.</p>
+                    {% endif %}
+                </div>
+
                 <a href="{% url 'police-update' officer.id %}" class="btn-icon" data-bs-toggle="tooltip" title="Edit">
                     <i class="bi bi-pencil"></i>
                 </a>
@@ -152,6 +181,48 @@
           {% endfor %}
         </tbody>
       </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title fw-bold">Officer Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center mb-4">
+            <img id="detailPhoto" src="" alt="Photo" class="rounded-circle shadow-sm" style="width: 100px; height: 100px; object-fit: cover;">
+            <h4 id="detailName" class="mt-3 fw-bold mb-1"></h4>
+            <span id="detailRank" class="badge bg-primary"></span>
+        </div>
+        
+        <div class="row g-3 mb-4">
+            <div class="col-6">
+                <small class="text-muted text-uppercase fw-bold" style="font-size: 0.7rem;">Badge Number</small>
+                <p id="detailBadge" class="fw-medium mb-0"></p>
+            </div>
+            <div class="col-6">
+                <small class="text-muted text-uppercase fw-bold" style="font-size: 0.7rem;">Department</small>
+                <p id="detailDepartment" class="fw-medium mb-0"></p>
+            </div>
+            <div class="col-6">
+                <small class="text-muted text-uppercase fw-bold" style="font-size: 0.7rem;">Status</small>
+                <p id="detailStatus" class="fw-medium mb-0"></p>
+            </div>
+        </div>
+
+        <h6 class="fw-bold border-bottom pb-2 mb-3">Related Cases</h6>
+        <div id="detailCases">
+            <!-- Cases list will be injected here -->
+        </div>
+
+      </div>
+      <div class="modal-footer border-0 pt-0">
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+      </div>
     </div>
   </div>
 </div>

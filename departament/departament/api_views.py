@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status, permissions
 from django.contrib.auth import authenticate, login, logout
 from rest_framework.authtoken.models import Token
+from cases.models import Case
 
 class LoginAPI(APIView):
     permission_classes = [permissions.AllowAny]
@@ -28,3 +29,19 @@ class LogoutAPI(APIView):
             request.user.auth_token.delete()
         logout(request)
         return Response({"message": "Logout successful"}, status=status.HTTP_200_OK)
+
+class DashboardStatsAPI(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        total_cases = Case.objects.count()
+        closed_cases = Case.objects.filter(status=2).count()
+        open_cases = Case.objects.filter(status=1).count()
+        cold_cases = Case.objects.filter(status=3).count()
+
+        return Response({
+            "total_cases": total_cases,
+            "closed_cases": closed_cases,
+            "open_cases": open_cases,
+            "cold_cases": cold_cases
+        }, status=status.HTTP_200_OK)

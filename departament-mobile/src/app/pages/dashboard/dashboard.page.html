@@ -1,7 +1,22 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Dashboard</ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary" class="dashboard-toolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <div class="header-title">
+        <span class="subtitle">Miami Metro</span>
+        <span class="title">
+          <ion-icon name="business-outline" style="vertical-align: middle; margin-right: 5px;"></ion-icon>
+          Police Dept.
+        </span>
+      </div>
+    </ion-title>
     <ion-buttons slot="end">
+      <ion-button class="notification-btn" (click)="openNotifications($event)">
+        <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
+        <span class="badge"></span>
+      </ion-button>
       <ion-button (click)="logout()">
         <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
       </ion-button>
@@ -9,36 +24,102 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="dashboard-content">
+  <div class="welcome-section">
+    <h2>Hello, {{ username }}</h2>
+    <p>Ready to serve and protect.</p>
+  </div>
+
+  <div class="stats-grid" *ngIf="stats">
+    <ion-row>
+      <ion-col size="6">
+        <ion-card class="stat-card">
+          <ion-card-content>
+            <ion-icon name="folder-open-outline" size="large" color="primary"></ion-icon>
+            <div class="stat-value">{{ stats.total_cases }}</div>
+            <div class="stat-label">Total Cases</div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card class="stat-card success">
+          <ion-card-content>
+            <ion-icon name="checkmark-circle-outline" size="large" color="success"></ion-icon>
+            <div class="stat-value">{{ stats.closed_cases }}</div>
+            <div class="stat-label">Solved</div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card class="stat-card danger">
+          <ion-card-content>
+            <ion-icon name="alert-circle-outline" size="large" color="danger"></ion-icon>
+            <div class="stat-value">{{ stats.open_cases }}</div>
+            <div class="stat-label">Active</div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6">
+        <ion-card class="stat-card warning">
+          <ion-card-content>
+            <ion-icon name="snow-outline" size="large" color="warning"></ion-icon>
+            <div class="stat-value">{{ stats.cold_cases }}</div>
+            <div class="stat-label">Cold Cases</div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </div>
+
   <div class="dashboard-grid">
-    <ion-card routerLink="/police-list" button>
-      <ion-card-header>
-        <ion-card-title>Officers</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-icon name="shield-outline" size="large"></ion-icon>
-        <p>Manage Police Force</p>
-      </ion-card-content>
-    </ion-card>
+    <ion-row>
+      <ion-col size="12" size-md="6">
+        <ion-card routerLink="/police-list" button class="action-card police-card">
+          <div class="card-bg"></div>
+          <ion-card-content>
+            <div class="icon-wrapper">
+              <ion-icon name="shield-checkmark-outline"></ion-icon>
+            </div>
+            <div class="text-content">
+              <ion-card-title>Police Force</ion-card-title>
+              <p>Manage officers & units</p>
+            </div>
+            <ion-icon name="chevron-forward" class="arrow-icon"></ion-icon>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
 
-    <ion-card routerLink="/killer-list" button color="danger">
-      <ion-card-header>
-        <ion-card-title>Suspects</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-icon name="skull-outline" size="large"></ion-icon>
-        <p>View Most Wanted</p>
-      </ion-card-content>
-    </ion-card>
+      <ion-col size="12" size-md="6">
+        <ion-card routerLink="/killer-list" button class="action-card killer-card">
+          <div class="card-bg"></div>
+          <ion-card-content>
+            <div class="icon-wrapper">
+              <ion-icon name="skull-outline"></ion-icon>
+            </div>
+            <div class="text-content">
+              <ion-card-title>Most Wanted</ion-card-title>
+              <p>Track suspects & fugitives</p>
+            </div>
+            <ion-icon name="chevron-forward" class="arrow-icon"></ion-icon>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
 
-    <ion-card routerLink="/case-list" button color="warning">
-      <ion-card-header>
-        <ion-card-title>Cases</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-icon name="folder-open-outline" size="large"></ion-icon>
-        <p>Investigation Files</p>
-      </ion-card-content>
-    </ion-card>
+      <ion-col size="12">
+        <ion-card routerLink="/case-list" button class="action-card case-card">
+          <div class="card-bg"></div>
+          <ion-card-content>
+            <div class="icon-wrapper">
+              <ion-icon name="briefcase-outline"></ion-icon>
+            </div>
+            <div class="text-content">
+              <ion-card-title>Active Cases</ion-card-title>
+              <p>Investigation files & evidence</p>
+            </div>
+            <ion-icon name="chevron-forward" class="arrow-icon"></ion-icon>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
   </div>
 </ion-content>

@@ -12,8 +12,12 @@ export class KillerService {
 
   constructor(private http: HttpClient) { }
 
-  getKillers(): Observable<Killer[]> {
-    return this.http.get<Killer[]>(this.apiUrl);
+  getKillers(search?: string): Observable<Killer[]> {
+    let params = {};
+    if (search) {
+      params = { search };
+    }
+    return this.http.get<Killer[]>(this.apiUrl, { params });
   }
 
   getKiller(id: number): Observable<Killer> {

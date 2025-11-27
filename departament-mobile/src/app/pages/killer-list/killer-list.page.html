@@ -1,26 +1,66 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar color="danger">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/dashboard"></ion-back-button>
+      <ion-back-button defaultHref="/dashboard" text=""></ion-back-button>
     </ion-buttons>
-    <ion-title>Suspects</ion-title>
+    <ion-title>Most Wanted</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/killer-create">
+        <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+      </ion-button>
+      <ion-button routerLink="/killer-gallery">
+        <ion-icon slot="icon-only" name="images-outline"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon slot="icon-only" name="filter-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar color="danger">
+    <ion-searchbar placeholder="Search suspects..." showCancelButton="focus" (ionInput)="handleSearch($event)"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
-    <ion-item *ngFor="let killer of killers">
-      <ion-thumbnail slot="start">
-        <img [src]="killer.photos && killer.photos.length > 0 ? killer.photos[0].image : 'assets/img/default-avatar.png'" />
-      </ion-thumbnail>
-      <ion-label>
-        <h2>{{ killer.name }}</h2>
-        <p *ngIf="killer.nickname">AKA: {{ killer.nickname }}</p>
-        <p>Danger Level: {{ killer.danger_level }}</p>
-      </ion-label>
-      <ion-badge slot="end" color="dark">
-        {{ killer.status_display }}
-      </ion-badge>
-    </ion-item>
+<ion-content class="ion-padding-top">
+  <ion-list lines="none" class="killer-list">
+    <ion-item-sliding *ngFor="let killer of killers">
+      <ion-item class="killer-item" [routerLink]="['/killer-detail', killer.id]" button detail>
+        <ion-thumbnail slot="start" class="killer-thumb" (click)="openImage($event, killer.photos && killer.photos.length > 0 ? killer.photos[0].image : 'assets/img/default-avatar.png')">
+          <img [src]="killer.photos && killer.photos.length > 0 ? killer.photos[0].image : 'assets/img/default-avatar.png'" />
+        </ion-thumbnail>
+        <ion-label>
+          <div class="killer-header">
+            <h2>{{ killer.name }}</h2>
+            <ion-badge color="dark" mode="ios">
+              {{ killer.status_display }}
+            </ion-badge>
+          </div>
+          <p class="nickname" *ngIf="killer.nickname">"{{ killer.nickname }}"</p>
+          <div class="danger-meter">
+            <span class="label">Danger Level:</span>
+            <ion-progress-bar [value]="killer.danger_level / 5" color="danger"></ion-progress-bar>
+          </div>
+        </ion-label>
+      </ion-item>
+    </ion-item-sliding>
   </ion-list>
+
+  <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeImage()">
+    <ng-template>
+      <ion-header class="ion-no-border">
+        <ion-toolbar color="black">
+          <ion-buttons slot="end">
+            <ion-button (click)="closeImage()">
+              <ion-icon name="close-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="modal-content">
+        <div class="image-container">
+          <img [src]="selectedImage" />
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

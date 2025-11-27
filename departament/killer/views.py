@@ -41,14 +41,28 @@ class KillerList(ListView):
 
 class KillerCreate(CreateView):
     model = Killer
-    fields = ['name', 'nickname', 'danger_level', 'crimes', 'status']
+    form_class = KillerForm
     template_name = 'killer/create.html'
     success_url = reverse_lazy('killer-list')
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        data['photos_formset'] = None 
+        if self.request.POST:
+            data['photos_formset'] = KillerPhotoFormSet(self.request.POST, self.request.FILES)
+        else:
+            data['photos_formset'] = KillerPhotoFormSet()
         return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        photos_formset = context['photos_formset']
+        if photos_formset.is_valid():
+            self.object = form.save()
+            photos_formset.instance = self.object
+            photos_formset.save()
+            return redirect(self.success_url)
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
         
 class KillerDetail(DetailView):
     model = Killer

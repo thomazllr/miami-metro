@@ -1,26 +1,47 @@
-<ion-header>
+<ion-header class="ion-no-border">
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/dashboard"></ion-back-button>
+      <ion-back-button defaultHref="/dashboard" text=""></ion-back-button>
     </ion-buttons>
-    <ion-title>Officers</ion-title>
+    <ion-title>Police Force</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/police-create">
+        <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon slot="icon-only" name="filter-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar color="primary">
+    <ion-searchbar placeholder="Search officers..." showCancelButton="focus" (ionInput)="handleSearch($event)"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
-    <ion-item *ngFor="let officer of officers">
-      <ion-avatar slot="start">
-        <img [src]="officer.photo || 'assets/img/default-avatar.png'" />
-      </ion-avatar>
-      <ion-label>
-        <h2>{{ officer.rank_display }} {{ officer.name }}</h2>
-        <p>Badge: {{ officer.badge_number }}</p>
-        <p>{{ officer.department_display }}</p>
-      </ion-label>
-      <ion-badge slot="end" [color]="officer.status === 1 ? 'success' : 'medium'">
-        {{ officer.status_display }}
-      </ion-badge>
-    </ion-item>
-  </ion-list>
+<ion-content class="ion-padding-top">
+  <ion-refresher slot="fixed">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-grid class="officer-grid">
+    <ion-row>
+      <ion-col size="12" size-md="6" size-xl="4" *ngFor="let officer of officers">
+        <ion-item class="officer-item" [routerLink]="['/police-detail', officer.id]" button detail lines="none">
+          <ion-avatar slot="start" class="officer-avatar">
+            <img [src]="officer.photo || 'assets/img/default-avatar.png'" />
+          </ion-avatar>
+          <ion-label>
+            <div class="officer-header">
+              <h2>{{ officer.rank_display }} {{ officer.name }}</h2>
+            </div>
+            <p class="badge-info">
+              <ion-icon name="shield-checkmark-outline"></ion-icon>
+              Badge #{{ officer.badge_number }}
+            </p>
+            <p class="dept-info">{{ officer.department_display }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

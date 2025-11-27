@@ -1,3 +1,5 @@
+import { Case } from './case.model';
+
 export interface PoliceOfficer {
     id: number;
     name: string;
@@ -11,4 +13,5 @@ export interface PoliceOfficer {
     photo: string | null;
     created_at: string;
     updated_at: string;
+    cases?: Case[];
 }

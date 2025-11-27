@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar color="warning">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/case-list"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ isEdit ? 'Edit Case' : 'New Case' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item>
+      <ion-label position="stacked">Case Number</ion-label>
+      <ion-input [(ngModel)]="caseData.case_number" name="case_number"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Title</ion-label>
+      <ion-input [(ngModel)]="caseData.title" name="title"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Description</ion-label>
+      <ion-textarea [(ngModel)]="caseData.description" name="description"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Status</ion-label>
+      <ion-select [(ngModel)]="caseData.status" name="status">
+        <ion-select-option [value]="1">Open</ion-select-option>
+        <ion-select-option [value]="2">Closed</ion-select-option>
+        <ion-select-option [value]="3">Cold Case</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Date Opened</ion-label>
+      <ion-datetime-button datetime="date"></ion-datetime-button>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime id="date" presentation="date" [(ngModel)]="caseData.date_opened" name="date_opened"></ion-datetime>
+        </ng-template>
+      </ion-modal>
+    </ion-item>
+  </ion-list>
+  <ion-button expand="block" (click)="save()" class="ion-margin-top">Save</ion-button>
+</ion-content>

@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/police-list"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ isEdit ? 'Edit Officer' : 'New Officer' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item>
+      <ion-label position="stacked">Name</ion-label>
+      <ion-input [(ngModel)]="policeData.name" name="name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Badge Number</ion-label>
+      <ion-input [(ngModel)]="policeData.badge_number" name="badge_number"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Rank</ion-label>
+      <ion-select [(ngModel)]="policeData.rank" name="rank">
+        <ion-select-option [value]="1">Chief</ion-select-option>
+        <ion-select-option [value]="2">Captain</ion-select-option>
+        <ion-select-option [value]="3">Sergeant</ion-select-option>
+        <ion-select-option [value]="4">Detective</ion-select-option>
+        <ion-select-option [value]="5">Analyst</ion-select-option>
+        <ion-select-option [value]="6">Officer</ion-select-option>
+        <ion-select-option [value]="7">Blood Spatter Analyst</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Department</ion-label>
+      <ion-select [(ngModel)]="policeData.department" name="department">
+        <ion-select-option [value]="1">Homicide</ion-select-option>
+        <ion-select-option [value]="2">Forensics</ion-select-option>
+        <ion-select-option [value]="3">Narcotics</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Photo</ion-label>
+      <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+    </ion-item>
+  </ion-list>
+  <ion-button expand="block" (click)="save()" class="ion-margin-top">Save</ion-button>
+</ion-content>

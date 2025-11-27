@@ -120,8 +120,9 @@
                 </div>
 
                 <hr class="my-3 opacity-25">
-                <div class="d-flex justify-content-between">
-                    <a href="{% url 'killer-update' killer.id %}" class="btn btn-sm btn-outline-primary w-100 me-2">Edit</a>
+                <div class="d-flex justify-content-between gap-2">
+                    <a href="{% url 'killer-detail' killer.id %}" class="btn btn-sm btn-dark flex-grow-1">View</a>
+                    <a href="{% url 'killer-update' killer.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
                     <button class="btn btn-sm btn-outline-danger" onclick="confirmDelete('{{ killer.id }}', '{{ killer.name|escapejs }}')">
                         <i class="bi bi-trash"></i>
                     </button>

@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar color="danger">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/killer-list"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ isEdit ? 'Edit Killer' : 'New Killer' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item>
+      <ion-label position="stacked">Name</ion-label>
+      <ion-input [(ngModel)]="killerData.name" name="name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Nickname</ion-label>
+      <ion-input [(ngModel)]="killerData.nickname" name="nickname"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Crimes</ion-label>
+      <ion-textarea [(ngModel)]="killerData.crimes" name="crimes"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Danger Level (1-5)</ion-label>
+      <ion-range min="1" max="5" pin="true" snaps="true" [(ngModel)]="killerData.danger_level" name="danger_level">
+        <ion-label slot="start">1</ion-label>
+        <ion-label slot="end">5</ion-label>
+      </ion-range>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Photos (Max 3)</ion-label>
+      <div class="photo-upload-container">
+        <input type="file" #fileInput (change)="onFileSelected($event)" multiple accept="image/*" style="display: none;" />
+        
+        <ion-button (click)="fileInput.click()" *ngIf="selectedFiles.length < 3" size="small" color="medium">
+          <ion-icon name="camera-outline" slot="start"></ion-icon>
+          Add Photo
+        </ion-button>
+
+        <div class="preview-grid" *ngIf="previewImages.length > 0">
+          <div class="preview-item" *ngFor="let img of previewImages; let i = index">
+            <img [src]="img" />
+            <ion-button fill="clear" color="danger" class="remove-btn" (click)="removeFile(i)">
+              <ion-icon name="close-circle" slot="icon-only"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Status</ion-label>
+      <ion-select [(ngModel)]="killerData.status" name="status">
+        <ion-select-option [value]="1">Dead</ion-select-option>
+        <ion-select-option [value]="2">Captured</ion-select-option>
+        <ion-select-option [value]="3">Missing</ion-select-option>
+        <ion-select-option [value]="4">Active</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  <ion-button expand="block" color="danger" (click)="save()" class="ion-margin-top">Save</ion-button>
+</ion-content>

@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar color="warning">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/case-list"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Case Detail</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/case-edit', case?.id]">
+        <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+      </ion-button>
+      <ion-button (click)="deleteCase()">
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="case">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Case #{{ case.case_number }}</ion-card-subtitle>
+      <ion-card-title>{{ case.title }}</ion-card-title>
+      <ion-badge [color]="case.status === 1 ? 'danger' : (case.status === 2 ? 'success' : 'medium')">
+        {{ case.status_display }}
+      </ion-badge>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Date Opened:</strong> {{ case.date_opened }}</p>
+      <p *ngIf="case.date_closed"><strong>Date Closed:</strong> {{ case.date_closed }}</p>
+      
+      <div *ngIf="case.killer" class="killer-section ion-margin-top">
+        <ion-item lines="none" class="ion-no-padding">
+          <ion-avatar slot="start">
+            <img [src]="case.killer.photos && case.killer.photos.length > 0 ? case.killer.photos[0].image : 'assets/img/default-avatar.png'" />
+          </ion-avatar>
+          <ion-label>
+            <h3><strong>Killer:</strong> {{ case.killer.name }}</h3>
+            <p *ngIf="case.killer.nickname">"{{ case.killer.nickname }}"</p>
+          </ion-label>
+        </ion-item>
+      </div>
+      
+      <h3 class="ion-margin-top">Description</h3>
+      <p>{{ case.description }}</p>
+
+      <h3 class="ion-margin-top" *ngIf="case.officers && case.officers.length > 0">Assigned Officers</h3>
+      <ion-list *ngIf="case.officers && case.officers.length > 0">
+        <ion-item *ngFor="let officer of case.officers">
+          <ion-avatar slot="start">
+            <img [src]="officer.photo || 'assets/img/default-avatar.png'" />
+          </ion-avatar>
+          <ion-label>{{ officer.name }} ({{ officer.rank }})</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

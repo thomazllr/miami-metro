@@ -1,29 +1,41 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Miami Metro Login</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="login-content">
+  <div class="login-wrapper">
+    <div class="login-card">
+      <div class="logo-container">
+        <img src="../../../assets/img/miami.png" alt="MMPD Logo" class="logo" />
+        <h1>MMPD</h1>
+        <p>Miami Metro Police Department</p>
+      </div>
+      
+      <div class="form-container">
+        <ion-item lines="none" class="custom-input">
+          <ion-icon name="person-outline" slot="start"></ion-icon>
+          <ion-label position="floating">Username</ion-label>
+          <ion-input [(ngModel)]="credentials.username" type="text"></ion-input>
+        </ion-item>
 
-<ion-content class="ion-padding">
-  <div class="login-container">
-    <img src="assets/img/miami.png" alt="Logo" class="logo" />
-    
-    <ion-item>
-      <ion-label position="floating">Username</ion-label>
-      <ion-input [(ngModel)]="credentials.username" type="text"></ion-input>
-    </ion-item>
+        <ion-item lines="none" class="custom-input">
+          <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+          <ion-label position="floating">Password</ion-label>
+          <ion-input [(ngModel)]="credentials.password" type="password"></ion-input>
+        </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Password</ion-label>
-      <ion-input [(ngModel)]="credentials.password" type="password"></ion-input>
-    </ion-item>
+        <ion-text color="danger" *ngIf="errorMessage" class="error-message">
+          <p>
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            {{ errorMessage }}
+          </p>
+        </ion-text>
 
-    <ion-text color="danger" *ngIf="errorMessage">
-      <p>{{ errorMessage }}</p>
-    </ion-text>
-
-    <ion-button expand="block" class="ion-margin-top" (click)="login()">
-      Login
-    </ion-button>
+        <ion-button expand="block" size="large" class="login-btn" (click)="login()">
+          ACCESS SYSTEM
+          <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+    <div class="footer-text">
+      <p>Authorized Personnel Only</p>
+      <p>Secure Connection v2.0</p>
+    </div>
   </div>
 </ion-content>

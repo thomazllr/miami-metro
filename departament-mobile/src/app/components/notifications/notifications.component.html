@@ -1,0 +1,15 @@
+<ion-list lines="full" class="ion-no-margin">
+  <ion-list-header>
+    <ion-label color="primary">Notifications</ion-label>
+  </ion-list-header>
+  <ion-item *ngFor="let notif of notifications" button detail="false">
+    <ion-label class="ion-text-wrap">
+      <h2 [class.fw-bold]="!notif.read">
+        <ion-icon *ngIf="!notif.read" name="ellipse" color="danger" style="font-size: 10px; vertical-align: middle; margin-right: 5px;"></ion-icon>
+        {{ notif.title }}
+      </h2>
+      <p>{{ notif.message }}</p>
+      <p class="ion-text-end text-muted" style="font-size: 0.75rem; margin-top: 4px;">{{ notif.time }}</p>
+    </ion-label>
+  </ion-item>
+</ion-list>
