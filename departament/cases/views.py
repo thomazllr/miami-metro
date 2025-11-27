@@ -8,6 +8,7 @@ class CaseList(ListView):
     model = Case
     template_name = 'cases/list.html'
     context_object_name = 'cases'
+    ordering = ['case_number']
 
 class CaseCreate(CreateView):
     model = Case

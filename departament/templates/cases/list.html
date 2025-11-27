@@ -25,7 +25,7 @@
             <div class="folder-tab">
                 <span class="small fw-bold text-uppercase">Case #{{ case.case_number }}</span>
             </div>
-            <div class="card-body pt-5">
+            <div class="card-body pt-5 d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start mb-3">
                     <h5 class="card-title fw-bold mb-0">{{ case.title }}</h5>
                     {% if case.status == 1 %}
@@ -37,15 +37,15 @@
                     {% endif %}
                 </div>
                 
-                <p class="card-text text-muted small mb-4">
+                <p class="card-text text-muted small mb-auto">
                     {{ case.description|truncatechars:100 }}
                 </p>
 
-                <div class="d-flex align-items-center mb-3">
+                <div class="d-flex align-items-center my-3">
                     <div class="avatar-group">
                         {% for officer in case.officers.all|slice:":3" %}
                             {% if officer.photo %}
-                                <img src="{{ officer.photo.url }}" class="rounded-circle border border-white" width="32" height="32" alt="{{ officer.name }}">
+                                <img src="{{ officer.photo.url }}" class="rounded-circle border border-white" style="width: 32px; height: 32px; object-fit: cover;" alt="{{ officer.name }}">
                             {% else %}
                                 <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center border border-white text-white small" style="width: 32px; height: 32px;">
                                     {{ officer.name|first }}
@@ -61,7 +61,7 @@
                     <span class="ms-2 small text-muted">Assigned</span>
                 </div>
 
-                <div class="d-flex justify-content-between align-items-center mt-auto">
+                <div class="d-flex justify-content-between align-items-center">
                     <small class="text-muted">
                         <i class="bi bi-calendar3 me-1"></i> {{ case.date_opened|date:"M d, Y" }}
                     </small>

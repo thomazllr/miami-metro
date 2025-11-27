@@ -9,4 +9,5 @@ class CaseViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['status']
     search_fields = ['title', 'case_number', 'description']
-    ordering_fields = ['date_opened', 'status']
+    ordering_fields = ['date_opened', 'status', 'case_number']
+    ordering = ['case_number']

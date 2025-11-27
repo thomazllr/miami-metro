@@ -24,7 +24,6 @@ class LoginAPI(APIView):
 
 class LogoutAPI(APIView):
     def post(self, request):
-        # Delete the token to force logout
         if request.user.is_authenticated:
             request.user.auth_token.delete()
         logout(request)

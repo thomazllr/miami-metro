@@ -36,7 +36,15 @@ export class CaseListPage implements OnInit {
   }
 
   loadCases(event?: any) {
-    const searchTerm = event?.target?.value;
+    let searchTerm = '';
+    if (event) {
+      if (event.detail && event.detail.value !== undefined) {
+        searchTerm = event.detail.value;
+      } else if (event.target && event.target.value !== undefined) {
+        searchTerm = event.target.value;
+      }
+    }
+
     this.caseService.getCases(searchTerm).subscribe(data => {
       this.cases = data;
     });
